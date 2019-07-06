@@ -11,7 +11,9 @@ defmodule BlawgPostgresDb.Article do
   end
 
   def changeset(struct, params \\ %{}) do
-    params = Map.merge(params, slugify(params))
+    if struct.slug === nil do
+      params = Map.merge(params, slugify(params))
+    end
 
     struct
     |> Ecto.Changeset.cast(params, [:title, :slug, :content, :date_published])

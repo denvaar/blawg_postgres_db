@@ -3,8 +3,8 @@ defmodule BlawgPostgresDbTest do
   doctest BlawgPostgresDb
 
   test "create an article" do
-    data = %{}
-    id = 1
+    data = %{title: "Test Title", content: "Blaw blaw blaw..."}
+
     assert BlawgPostgresDb.create_article(data) == {:ok, %{id: id}}
   end
 
