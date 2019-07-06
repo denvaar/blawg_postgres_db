@@ -9,11 +9,14 @@ defmodule BlawgPostgresDb.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       dialyzer: [
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
         paths: [
           "_build/dev/lib/blawg_postgres_db/ebin",
           "_build/dev/lib/perseus/ebin"
         ]
-      ]
+      ],
+      elixirc_paths: elixirc_paths(Mix.env()),
+      aliases: aliases()
     ]
   end
 
@@ -28,10 +31,17 @@ defmodule BlawgPostgresDb.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:perseus, path: "../perseus", app: false},
+      {:perseus, git: "https://github.com/denvaar/perseus.git", app: false},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:dialyxir, "~> 0.5", only: [:dev]}
     ]
+  end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
+  defp aliases do
+    [test: ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end
