@@ -9,7 +9,8 @@ defmodule BlawgPostgresDb.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       dialyzer: [
-        plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
+        # plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
+        flags: [:unmatched_returns, :error_handling, :race_conditions, :underspecs],
         paths: [
           "_build/dev/lib/blawg_postgres_db/ebin",
           "_build/dev/lib/perseus/ebin"
@@ -34,7 +35,7 @@ defmodule BlawgPostgresDb.MixProject do
       {:perseus, git: "https://github.com/denvaar/perseus.git", app: false},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
-      {:dialyxir, "~> 0.5", only: [:dev]}
+      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
     ]
   end
 
