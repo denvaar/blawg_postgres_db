@@ -8,6 +8,13 @@ defmodule BlawgPostgresDbTest do
 
     assert BlawgPostgresDb.list_articles() == []
 
+    {:error,
+      %{content: ["can't be blank"],
+        title: ["can't be blank"]}} =
+      BlawgPostgresDb.create_article(%{})
+
+    assert BlawgPostgresDb.list_articles() == []
+
     data = %{title: "Test Title", content: "Blaw blaw blaw..."}
     {:ok, %{slug: slug}} = BlawgPostgresDb.create_article(data)
 
