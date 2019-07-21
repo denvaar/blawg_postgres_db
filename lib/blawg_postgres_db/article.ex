@@ -16,6 +16,7 @@ defmodule BlawgPostgresDb.Article do
     struct
     |> Ecto.Changeset.cast(params, [:title, :slug, :content, :date_published])
     |> Ecto.Changeset.validate_required([:title, :content])
+    |> Ecto.Changeset.unique_constraint(:slug)
   end
 
   defp slugify(%{"title" => title}) do
