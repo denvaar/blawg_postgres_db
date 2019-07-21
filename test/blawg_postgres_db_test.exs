@@ -29,4 +29,11 @@ defmodule BlawgPostgresDbTest do
 
     assert BlawgPostgresDb.list_articles() == []
   end
+
+  test "cannot have same slug for two articles" do
+    data = %{title: "Test Title", content: "Blaw blaw blaw..."}
+    {:ok, %{slug: slug}} = BlawgPostgresDb.create_article(data)
+
+    assert BlawgPostgresDb.create_article(data) == {:error, %{slug: ["has already been taken"]}}
+  end
 end
