@@ -4,7 +4,7 @@ defmodule BlawgPostgresDb.Repo.Migrations.CreateArticles do
   def change do
     create table(:articles) do
       add :content, :text
-      add :date_published, :date
+      add :date_published, :utc_datetime
       add :slug, :string
       add :title, :string
 
