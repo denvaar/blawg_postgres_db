@@ -8,14 +8,12 @@ defmodule BlawgPostgresDbTest do
 
     assert BlawgPostgresDb.list_articles() == []
 
-    {:error,
-      %{content: ["can't be blank"],
-        title: ["can't be blank"]}} =
+    {:error, %{content: ["can't be blank"], title: ["can't be blank"]}} =
       BlawgPostgresDb.create_article(%{})
 
     assert BlawgPostgresDb.list_articles() == []
 
-    data = %{title: "Test Title", content: "Blaw blaw blaw..."}
+    data = %{title: "Test Title", content: "Blaw blaw blaw...", summary: "Some summary"}
     {:ok, %{slug: slug}} = BlawgPostgresDb.create_article(data)
 
     BlawgPostgresDb.update_article(slug, %{content: "New content..."})
@@ -31,7 +29,7 @@ defmodule BlawgPostgresDbTest do
   end
 
   test "cannot have same slug for two articles" do
-    data = %{title: "Test Title", content: "Blaw blaw blaw..."}
+    data = %{title: "Test Title", content: "Blaw blaw blaw...", summary: "sum"}
     {:ok, %{slug: slug}} = BlawgPostgresDb.create_article(data)
 
     assert BlawgPostgresDb.create_article(data) == {:error, %{slug: ["has already been taken"]}}

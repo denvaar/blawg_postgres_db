@@ -7,6 +7,7 @@ defmodule BlawgPostgresDb.Repo.Migrations.CreateArticles do
       add :date_published, :utc_datetime
       add :slug, :string
       add :title, :string
+      add :summary, :string
 
       timestamps()
     end

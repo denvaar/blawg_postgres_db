@@ -2,10 +2,11 @@ defmodule BlawgPostgresDb.Article do
   use Ecto.Schema
 
   schema "articles" do
-    field :content, :string
-    field :date_published, :utc_datetime
-    field :slug, :string
-    field :title, :string
+    field(:content, :string)
+    field(:date_published, :utc_datetime)
+    field(:slug, :string)
+    field(:title, :string)
+    field(:summary, :string)
 
     timestamps()
   end
@@ -14,8 +15,8 @@ defmodule BlawgPostgresDb.Article do
     params = if struct.slug === nil, do: Map.merge(params, slugify(params)), else: params
 
     struct
-    |> Ecto.Changeset.cast(params, [:title, :slug, :content, :date_published])
-    |> Ecto.Changeset.validate_required([:title, :content])
+    |> Ecto.Changeset.cast(params, [:title, :slug, :content, :summary, :date_published])
+    |> Ecto.Changeset.validate_required([:title, :content, :summary])
     |> Ecto.Changeset.unique_constraint(:slug)
   end
 
