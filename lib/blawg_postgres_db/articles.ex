@@ -13,6 +13,7 @@ defmodule BlawgPostgresDb.Articles do
     case Repo.insert(changeset) do
       {:ok, changeset} ->
         {:ok, %{slug: changeset.slug}}
+
       {:error, changeset} ->
         {:error, Helpers.humanize_errors(changeset)}
     end
@@ -31,6 +32,7 @@ defmodule BlawgPostgresDb.Articles do
       case Repo.update(changeset) do
         {:ok, changeset} ->
           {:ok, %{slug: changeset.slug}}
+
         {:error, changeset} ->
           {:error, Helpers.humanize_errors(changeset)}
       end
@@ -38,7 +40,6 @@ defmodule BlawgPostgresDb.Articles do
       :not_found
     end
   end
-
 
   @doc """
   Retreive an article from the database
@@ -51,7 +52,6 @@ defmodule BlawgPostgresDb.Articles do
       normalize_article(article)
     end
   end
-
 
   @doc """
   List all articles in the database
@@ -82,8 +82,6 @@ defmodule BlawgPostgresDb.Articles do
     do_delete_article(article)
   end
 
-
-
   defp do_delete_article(nil), do: :not_found
 
   defp do_delete_article(article) do
@@ -92,7 +90,6 @@ defmodule BlawgPostgresDb.Articles do
       {:error, _changeset} -> :not_found
     end
   end
-
 
   defp build_article_changeset(params) do
     %Article{}
@@ -105,10 +102,13 @@ defmodule BlawgPostgresDb.Articles do
   end
 
   defp normalize_article(article) do
-    %Perseus.Article.Article{id: article.id,
+    %Perseus.Article.Article{
+      id: article.id,
       slug: article.slug,
+      summary: article.summary,
       title: article.title,
       content: article.content,
-      date_published: article.date_published}
+      date_published: article.date_published
+    }
   end
 end
